@@ -1,0 +1,18 @@
+services:
+  web:
+    image: ubuntu/apache2 # imagen de Apache
+    container_name: apache_server # nombre del contenedor
+    ports:
+      - "8080:80" # mapeo de puertos
+      - "8443:443" # para HTTPS
+    volumes:
+      - ./apache2.conf:/etc/apache2/apache2.conf # archivo de configuración principal
+      - ./sites-available:/etc/apache2/sites-available # archivos de configuración de hosts virtuales
+      - ./sites-enabled:/etc/apache2/sites-enabled
+      - ./websites:/var/www/html/ # directorio de los sitios web
+      - ./ports.conf:/etc/apache2/ports.conf # archivo de configuración de puertos
+      - ./htpasswd:/etc/apache2/.htpasswd # archivo de contraseñas
+      - ./certs:/etc/apache2/certs # directorio de certificados (hechos con openssl)
+    restart: always # reinicio automático
+    # comando para activar los hosts virtuales y arrancar Apache
+  
